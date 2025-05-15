@@ -3,6 +3,8 @@
 import "./globals.css";
 import Navbar from "@/components/(Navbar)/Navbar";
 import { SessionProvider } from "next-auth/react";
+import { NextLayout } from "./nextLayout";
+import Footer from "@/components/(Layout)/(Footer)/Footer";
 
 export default function RootLayout({
   children,
@@ -14,7 +16,8 @@ export default function RootLayout({
       <body>
         <SessionProvider>
           <Navbar />
-          <div>{children}</div>
+          <NextLayout>{children}</NextLayout>
+          <Footer />
         </SessionProvider>
       </body>
     </html>
