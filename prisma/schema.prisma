@@ -2,10 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 
@@ -40,8 +40,8 @@ model Room {
   hasWifi           Boolean   @default(false)   // 와이파이
   hasBarbeque       Boolean   @default(false)   // 바베큐 시설
   hasFreeParking    Boolean   @default(false)   // 무료 주차
-  userId            String    // 사용자 아이디
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)  // 사용자 정보
+  userId            String?    // 사용자 아이디
+  user              User?      @relation(fields: [userId], references: [id], onDelete: Cascade)  // 사용자 정보
   @@index([userId])
 }
 
