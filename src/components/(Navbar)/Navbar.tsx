@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import NavItem from "./NavItem";
 import { RxDividerVertical } from "react-icons/rx";
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineUser } from "react-icons/ai";
+import { RxCross2 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 
 const userMenus = [
@@ -12,9 +13,30 @@ const userMenus = [
   { id: 3, title: "FAQ", url: "/users/faqs" },
 ];
 
+type DetailFilterType = "location" | "checkIn" | "checkOut" | "guest";
+
+interface FilterProps {
+  location: string;
+  checkIn: string;
+  checkOut: string;
+  guest: number;
+}
+
 const Navbar = () => {
+  // 서브 네비바 활성화 상태값
   const [menu, setMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  // 필터링 상태값
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [detailFilter, setDetailFilter] = useState<null | DetailFilterType>(null);
+  const [filterValue, setFilterValue] = useState<FilterProps>({
+    location: "",
+    checkIn: "",
+    checkOut: "",
+    guest: 0,
+  });
 
   const router = useRouter();
 
@@ -61,18 +83,55 @@ const Navbar = () => {
       {/* search Box Row */}
       <div className="flex justify-center items-center w-full mh-20 p-5 flex-wrap gap-3">
         {/* Search */}
-        <div className="flex justify-between w-full sm:w-[300px] border border-gray-200 rounded-full py-2 px-4">
-          <div className="flex justify-center gap-1">
-            <div className="my-auto font-semibold text-sm">어디든지</div>
-            <RxDividerVertical className="text-gray-200 my-auto text-2xl" />
-            <div className="my-auto font-semibold text-sm">언제든</div>
-            <RxDividerVertical className="text-gray-200 my-auto text-2xl" />
-            <div className="my-auto font-semibold text-sm">게스트</div>
+        {showFilter === false ? (
+          <div className="flex justify-between h-12 w-full sm:w-[300px] border border-gray-200 rounded-full py-2 px-4 transition-all duration-500 ease-in-out transform will-change-auto hover:scale-105 hover:shadow-md">
+            <div
+              role="presentation"
+              className="flex justify-center gap-1 cursor-pointer"
+              onClick={() => setShowFilter(true)}
+            >
+              <div className="my-auto font-semibold text-sm">어디든지</div>
+              <RxDividerVertical className="text-gray-200 my-auto text-2xl" />
+              <div className="my-auto font-semibold text-sm">언제든</div>
+              <RxDividerVertical className="text-gray-200 my-auto text-2xl" />
+              <div className="my-auto font-semibold text-sm">게스트</div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowFilter(true)}
+              className="bg-rose-500 text-white rounded-full w-6 h-6 my-auto cursor-pointer"
+            >
+              <AiOutlineSearch className="text-sm m-auto font-semibold" />
+            </button>
           </div>
-          <button type="button" className="bg-rose-500 text-white rounded-full w-6 h-6 my-auto">
-            <AiOutlineSearch className="text-sm m-auto font-semibold" />
-          </button>
-        </div>
+        ) : (
+          <div className="flex justify-center items-center w-full min-h-20 p-5 flex-wrap gap-3 h-20 transition-opacity duration-500 ease-in-out hover:opacity-80">
+            <div className="flex justify-center gap-7 h-14 text-center items-center">
+              <button type="button" className="font-semibold underline underline-offset-8">
+                숙소
+              </button>
+              <button
+                type="button"
+                className="font-semibold underline underline-offset-8"
+                onClick={() => window.alert("서비스 준비중 입니다.")}
+              >
+                체험
+              </button>
+              <button type="button" className="font-semibold underline underline-offset-8">
+                온라인 체험
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowFilter(false)}
+                className="bg-rose-500 text-white rounded-full w-6 h-6 my-auto cursor-pointer"
+              >
+                <RxCross2 className="text-md m-auto font-semibold" />
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* user Btn */}
         <div className="flex gap-4 my-auto relative">
           <button type="button" className="font-semibold text-sm my-auto px-4 py-3 rounded-full ">

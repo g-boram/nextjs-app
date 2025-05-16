@@ -1,12 +1,9 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
 const NavItem = ({ mobile }: { mobile?: boolean }) => {
-  const { data: session, status } = useSession();
-  console.log({ session }, status);
   const navItemStyle = `py-2 text-center border-b-4 cursor-pointer`;
 
   return (
@@ -27,15 +24,6 @@ const NavItem = ({ mobile }: { mobile?: boolean }) => {
       <li className={navItemStyle}>
         <Link href={"/user"}>User</Link>
       </li>
-      {session?.user ? (
-        <li className={navItemStyle}>
-          <button>SignOut</button>
-        </li>
-      ) : (
-        <li className={navItemStyle} onClick={() => signIn()}>
-          <button>SignIn</button>
-        </li>
-      )}
     </ul>
   );
 };
