@@ -1,62 +1,49 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
+
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum UserType {
-  User
-  Admin
-}
-
+// 사용자
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  hashedPassword String?
-  accounts       Account[]
-  sessions       Session[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id             String    @id @default(uuid())   // 아이디
+  email          String    @unique                // 이메일
+  name           String?                          // 이름
+  image          String?                          // 사진
+  desc           String?
+  rooms          Room[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+model Room {
+  id                Int       @id @default(autoincrement())     // 숙소 아이디
+  title             String    // 제목
+  images            String[]  // 상세사진
+  address           String    // 주소
+  lat               String    // 위도
+  lng               String    // 경도
+  category          String    // 카테고리
+  desc              String    // 설명
+  price             Int       // 가격
+  bedroomDesc       String?   // 침실 설명
+  freeCancel        Boolean   @default(false)   // 무료취소
+  selfCheckIn       Boolean   @default(false)   // 셀프 체크인
+  officeSpace       Boolean   @default(false)   // 사무시설
+  hasMountainView   Boolean   @default(false)   // 마운틴 뷰
+  hasShampoo        Boolean   @default(false)   // 샴푸
+  hasFreeLaundry    Boolean   @default(false)   // 무료세탁
+  hasAirConditioner Boolean   @default(false)   // 에어컨
+  hasWifi           Boolean   @default(false)   // 와이파이
+  hasBarbeque       Boolean   @default(false)   // 바베큐 시설
+  hasFreeParking    Boolean   @default(false)   // 무료 주차
+  userId            String?    // 사용자 아이디
+  user              User?      @relation(fields: [userId], references: [id], onDelete: Cascade)  // 사용자 정보
+  @@index([userId])
 }
+
+
+
