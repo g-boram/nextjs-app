@@ -9,7 +9,7 @@ interface CalendarProps {
   option?: string; // 옵션값으로 구분
 }
 
-const Calendar = ({ selectedDate, setSelectedDate, onClickFc, option, beforeDate }: CalendarProps) => {
+const CustomDayJSCalendar = ({ selectedDate, setSelectedDate, onClickFc, option, beforeDate }: CalendarProps) => {
   const [currentDate, setCurrentDate] = useState(dayjs());
 
   const startOfMonth = currentDate.startOf("month");
@@ -91,4 +91,4 @@ const Calendar = ({ selectedDate, setSelectedDate, onClickFc, option, beforeDate
   );
 };
 
-export default Calendar;
+export default CustomDayJSCalendar;

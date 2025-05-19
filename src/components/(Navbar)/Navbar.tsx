@@ -14,7 +14,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/ko";
-import Calendar from "../(Common)/Calendar";
+import CustomDayJSCalendar from "../(Calendar)/CustomDayJSCalendar";
 
 const userMenus = [
   { id: 1, title: "로그인", url: "/users/login" },
@@ -66,7 +66,11 @@ export default function Navbar() {
     return (
       <>
         <div className="text-sm font-semibold text-black">체크인 날짜 설정하기</div>
-        <Calendar selectedDate={dayjs(checkInDate)} setSelectedDate={setCheckInDate} onClickFc={moveCheckOut} />
+        <CustomDayJSCalendar
+          selectedDate={dayjs(checkInDate)}
+          setSelectedDate={setCheckInDate}
+          onClickFc={moveCheckOut}
+        />
       </>
     );
   };
@@ -75,7 +79,7 @@ export default function Navbar() {
     return (
       <>
         <div className="text-sm font-semibold text-black">체크인 날짜 설정하기</div>
-        <Calendar
+        <CustomDayJSCalendar
           selectedDate={dayjs(checkOutDate)}
           setSelectedDate={setCheckOutDate}
           onClickFc={moveGuest}
