@@ -12,6 +12,7 @@ interface ReactCalendarProps {
   desc?: string; // 설명
   direction?: string; // 헤더 정렬방향
   defaultDate?: Date | string; // 기본 날짜값
+  minDate?: Date | undefined;
 }
 
 // ----------------------
@@ -22,27 +23,28 @@ interface ReactCalendarProps {
 
 const CustomReactCalendar = ({
   title = "Calendar",
-  desc = "",
+  desc = "description",
   direction = "row",
   defaultDate = "",
+  minDate,
 }: ReactCalendarProps) => {
   // const [defaultValue, setDefaultValue] = useState<Date | string>();
 
   // const onChange = (e: any) => {};
 
   return (
-    <div>
+    <div className={`${styles.container}`}>
       {/* **** 헤더 영역 **** */}
       <div className={`${direction === "row" ? styles.header_row : styles.header_col}`}>
-        <div>{title}</div>
-        <div>{desc}</div>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.desc}>{desc}</div>
       </div>
 
       {/* **** 캘린더 영역 **** */}
       <Calendar
-        className={`${styles.react_calendar}`}
+        className={`${styles.wrapper} `}
         // onChange={onChange}
-        minDate={new Date()}
+        minDate={minDate ? minDate : undefined}
         defaultValue={defaultDate ? dayjs(defaultDate).format("YYYY-MM-DD") : null}
         formatDay={(locale, date) => dayjs(date).format("DD")}
       />

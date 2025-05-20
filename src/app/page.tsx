@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import CustomReactCalendar from "@/components/(Calendar)/CustomReactCalendar";
 import { PrismaClient } from "@prisma/client";
 
 export default async function Home() {
@@ -6,6 +7,7 @@ export default async function Home() {
 
   return (
     <>
+      <CustomReactCalendar />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20 sm:px-4 md:px-8 lg:px-16">
         {data?.map((room) => (
           <div key={room.id}>
