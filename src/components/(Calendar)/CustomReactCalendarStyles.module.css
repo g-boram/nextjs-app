@@ -1,0 +1,28 @@
+/* 헤더 포함 전체영역 */
+.container {
+  width: fit-content;
+  height: auto;
+  margin: 5px;
+}
+
+/* 타이틀/설명 한줄 */
+.header_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 타이틀/설명 세로 */
+.header_col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 달력영역 */
+.wrapper {
+  margin-top: 5px;
+}
+
+.title {
+  font-size: 11px;
+}
