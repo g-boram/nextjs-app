@@ -38,8 +38,8 @@ const RegisterPage = () => {
   };
 
   return (
-    <section className="grid h-[calc(100vh_-_56px)] place-items-center">
-      <form className="flex flex-col justify-center gap-4 min-w-[350px]" onSubmit={handleSubmit(onSubmit)}>
+    <section className="h-[60vh] grid place-items-center">
+      <form className="flex flex-col items-center justify-center gap-4 min-w-[350px]" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-2xl">Register</h1>
 
         <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />

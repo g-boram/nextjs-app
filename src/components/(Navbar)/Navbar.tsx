@@ -165,7 +165,7 @@ export default function Navbar() {
 
         {/* Search 영역 */}
         {showFilter === false ? (
-          <div className="flex justify-between w-full sm:w-[300px] border border-gray-200 rounded-full py-2 px-4 hover:scale-105 hover:shadow-md">
+          <div className="flex justify-between w-full min-h-20 sm:w-[350px] border border-gray-200 rounded-full py-4 px-8 hover:scale-105 hover:shadow-md">
             <div
               role="presentation"
               className="flex justify-center gap-1 cursor-pointer"
@@ -187,7 +187,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="cursor-pointer flex justify-center items-center w-full min-h-20 p-1 flex-wrap gap-3 relative lg:w-[60%]">
-            <div className="flex justify-center gap-8 h-5 text-center items-center w-full absolute ">
+            <div className="flex justify-center gap-10 h-5 text-center items-center w-full absolute ">
               <button type="button" className="font-semibold underline underline-offset-8">
                 숙소
               </button>

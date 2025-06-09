@@ -47,7 +47,7 @@ const Input: React.FC<InputProps> = ({
                         disabled:cursor-not-allowed
                         ${formatPrice ? "pl-9" : "pl-4"}
                         ${errors[id] ? "border-rose-500" : "border-neutral-300"}
-                        ${errors[id] ? "focus:border-rose-500" : "focus:border-orange-500"}
+                        ${errors[id] ? "focus:border-rose-500" : "focus:border-rose-300"}
                 `}
       />
       <label
@@ -58,7 +58,6 @@ const Input: React.FC<InputProps> = ({
                 transform 
                 -translate-y-3 
                 top-5 
-                z-10 
                 origin-[0] 
                 ${formatPrice ? "left-9" : "left-4"}
                 peer-placeholder-shown:scale-100 
