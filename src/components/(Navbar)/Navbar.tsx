@@ -187,7 +187,7 @@ export default function Navbar() {
           </div>
         ) : (
           <div className="cursor-pointer flex justify-center items-center w-full min-h-20 p-1 flex-wrap gap-3 relative lg:w-[60%]">
-            <div className="flex justify-center gap-8 h-10 text-center items-center w-full absolute ">
+            <div className="flex justify-center gap-8 h-5 text-center items-center w-full absolute ">
               <button type="button" className="font-semibold underline underline-offset-8">
                 숙소
               </button>
