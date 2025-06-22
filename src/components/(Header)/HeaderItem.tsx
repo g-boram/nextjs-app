@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React from "react";
 
-const NavItem = ({ mobile }: { mobile?: boolean }) => {
+const HeaderItem = ({ mobile }: { mobile?: boolean }) => {
   const navItemStyle = `py-2 text-center border-b-4 cursor-pointer`;
 
   return (
@@ -14,7 +14,7 @@ const NavItem = ({ mobile }: { mobile?: boolean }) => {
       flex
       w-full
       gap-5
-      ${mobile && "flex-col h-full "}
+      ${mobile && "flex-col h-full pb-5"}
       items-center
     `}
     >
@@ -28,4 +28,4 @@ const NavItem = ({ mobile }: { mobile?: boolean }) => {
   );
 };
 
-export default NavItem;
+export default HeaderItem;

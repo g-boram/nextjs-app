@@ -1,8 +1,9 @@
 "use client";
-import Link from "next/link";
+
 import React, { useState } from "react";
-import NavItem from "./NavItem";
-import { RxDividerVertical } from "react-icons/rx";
+import dayjs, { Dayjs } from "dayjs";
+import CustomDayJSCalendar from "../(Calendar)/CustomDayJSCalendar";
+import "dayjs/locale/ko";
 import {
   AiOutlineMenu,
   AiOutlineMinusCircle,
@@ -10,11 +11,10 @@ import {
   AiOutlineSearch,
   AiOutlineUser,
 } from "react-icons/ai";
+import { RxDividerVertical } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
-import dayjs, { Dayjs } from "dayjs";
-import "dayjs/locale/ko";
-import CustomDayJSCalendar from "../(Calendar)/CustomDayJSCalendar";
+import { DetailFilterType, FilterProps } from "@/app/interface";
 
 const userMenus = [
   { id: 1, title: "로그인", url: "/users/login" },
@@ -22,18 +22,8 @@ const userMenus = [
   { id: 3, title: "FAQ", url: "/users/faqs" },
 ];
 
-type DetailFilterType = "location" | "checkIn" | "checkOut" | "guest";
-
-interface FilterProps {
-  location: string;
-  checkIn?: string;
-  checkOut: string;
-  guest: number;
-}
-
-export default function Navbar() {
+export default function HotelNavbar() {
   // 서브 네비바 활성화 상태값
-  const [menu, setMenu] = useState(false); // admin, user 영역 화면 사이즈에 따른 활성화 여부
   const [showUserMenu, setShowUserMenu] = useState(false); // 유저 토글 상태값
   const [checkInDate, setCheckInDate] = useState<Dayjs | null>(null); // 체크인 날짜
   const [checkOutDate, setCheckOutDate] = useState<Dayjs | null>(null); // 체크아웃 날짜
@@ -49,10 +39,6 @@ export default function Navbar() {
   });
 
   const router = useRouter();
-
-  const handleMenu = () => {
-    setMenu(!menu);
-  };
 
   const moveCheckOut = () => {
     setDetailFilter("checkOut");
@@ -92,38 +78,6 @@ export default function Navbar() {
 
   return (
     <nav className={"relative z-10 w-full shadow-sm text-white bg-black ${menu && pb-5}"}>
-      {/***** Logo & 관리자페이지 행 ******/}
-      <div className="flex items-center justify-between mx-5 sm:mx-10 lg:mx-20 sm:gap-4 pt-3">
-        {/* logo */}
-        <div className={"sm:flex items-center text-2xl h-10"}>
-          <Link href={"/"}>Logo</Link>
-        </div>
-        {/* small screen menu Button */}
-        <div className="text-2xl sm:hidden sm:mx-3 p-1 w-full ">
-          {menu === false ? (
-            <button className="float-end" onClick={handleMenu}>
-              +
-            </button>
-          ) : (
-            <button className="float-end" onClick={handleMenu}>
-              -
-            </button>
-          )}
-        </div>
-        {/* nav-items large screen */}
-        <div className="hidden sm:block">
-          <NavItem />
-        </div>
-      </div>
-      {/* 작은 사이즈 일때 +/- 로 활성화되는 영역 */}
-      <div
-        className={`block sm:hidden transition-all duration-300 ease-in-out ${
-          menu ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-        }`}
-      >
-        {menu === false ? null : <NavItem mobile />}
-      </div>
-
       {/****** 메뉴이동 행 *****/}
       <div className="flex justify-center items-center w-full p-5 flex-wrap gap-3">
         {/* 텍스트 && 메뉴 && 유저 토글영역 행 */}
@@ -165,7 +119,7 @@ export default function Navbar() {
 
         {/* Search 영역 */}
         {showFilter === false ? (
-          <div className="flex justify-between w-full min-h-20 sm:w-[350px] border border-gray-200 rounded-full py-4 px-8 hover:scale-105 hover:shadow-md">
+          <div className="flex justify-between w-full min-h-15 sm:w-[350px] border border-gray-200 rounded-full py-2 px-6 hover:scale-105 hover:shadow-md">
             <div
               role="presentation"
               className="flex justify-center gap-1 cursor-pointer"
