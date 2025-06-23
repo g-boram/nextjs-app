@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { DetailFilterType, FilterProps } from "../interface";
+import { DetailFilterType, FilterProps } from "../(page)/hotelPage/interface";
 
 export const detailFilterState = atom<DetailFilterType | null>({
   key: "detailFilter",

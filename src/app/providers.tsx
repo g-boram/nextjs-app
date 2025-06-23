@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import Footer from "@/components/(Layout)/(Footer)/Footer";
-
-import { RecoilRoot } from "recoil";
 import Header from "@/components/(Header)/Header";
+import { RecoilRoot } from "recoil";
 
 interface Props {
   children?: React.ReactNode;
@@ -18,8 +16,7 @@ export const NextLayout = ({ children }: Props) => {
   return (
     <NextProvider>
       <Header />
-      <div className="mt-20 p-10 min-h-[80vh]">{children}</div>
-      <Footer />
+      <div className="mt-10 p-10 min-h-[100vh]">{children}</div>
     </NextProvider>
   );
 };

@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <Link href="/navbar" className="text-black hover:underline">
+        <Link href="/hotelPage" className="text-black hover:underline">
           NavbarPage 가기
         </Link>
       </div>

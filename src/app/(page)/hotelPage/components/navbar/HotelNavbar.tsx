@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import CustomDayJSCalendar from "../(Calendar)/CustomDayJSCalendar";
+
 import "dayjs/locale/ko";
 import {
   AiOutlineMenu,
@@ -14,7 +14,9 @@ import {
 import { RxDividerVertical } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
-import { DetailFilterType, FilterProps } from "@/app/interface";
+
+import CustomDayJSCalendar from "@/components/(Calendar)/CustomDayJSCalendar";
+import { DetailFilterType, FilterProps } from "../../interface";
 
 const userMenus = [
   { id: 1, title: "로그인", url: "/users/login" },
@@ -32,6 +34,7 @@ export default function HotelNavbar() {
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [detailFilter, setDetailFilter] = useState<null | DetailFilterType>(null);
   const [filterValue, setFilterValue] = useState<FilterProps>({
+    category: "",
     location: "",
     checkIn: "",
     checkOut: "",
