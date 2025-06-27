@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { signIn } from "next-auth/react";
-import Input from "@/components/(Form)/Input";
-import Button from "@/components/(Common)/Button";
+import Input from "@/src/app/components/(Form)/Input";
+import Button from "@/src/app/components/(Common)/Button";
 
 const Login = () => {
   const {

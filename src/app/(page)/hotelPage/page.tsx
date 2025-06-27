@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "./components/footer/Footer";
 import HotelNavbar from "./components/navbar/HotelNavbar";
+import Footer from "./components/Footer";
 
 const HotelPage = () => {
   return (

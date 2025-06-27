@@ -14,9 +14,8 @@ import {
 import { RxDividerVertical } from "react-icons/rx";
 import { RxCross2 } from "react-icons/rx";
 import { useRouter } from "next/navigation";
-
-import CustomDayJSCalendar from "@/components/(Calendar)/CustomDayJSCalendar";
 import { DetailFilterType, FilterProps } from "../../interface";
+import CustomDayJSCalendar from "@/src/app/components/(Calendar)/CustomDayJSCalendar";
 
 const userMenus = [
   { id: 1, title: "로그인", url: "/users/login" },
@@ -67,7 +66,7 @@ export default function HotelNavbar() {
   const CheckOutFilter = () => {
     return (
       <>
-        <div className="text-sm font-semibold text-black">체크인 날짜 설정하기</div>
+        <div className="text-sm font-semibold text-black">체크아웃 날짜 설정하기</div>
         <CustomDayJSCalendar
           selectedDate={dayjs(checkOutDate)}
           setSelectedDate={setCheckOutDate}

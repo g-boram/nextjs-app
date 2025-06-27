@@ -1,6 +1,6 @@
 "use client";
-
-import "./globals.css";
+import "tailwindcss";
+import "../../globals.css";
 import { SessionProvider } from "next-auth/react";
 import { NextLayout } from "./providers";
 

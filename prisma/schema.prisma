@@ -1,53 +1,186 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
-// 사용자
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  refresh_token_expires_in    Int?
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
-  id             String    @id @default(uuid())   // 아이디
-  email          String    @unique                // 이메일
-  name           String?                          // 이름
-  image          String?                          // 사진
-  desc           String?
-  rooms          Room[]
+  id          String     @id @default(uuid())
+  email       String?    @unique
+  name        String?
+  image       String?
+  desc        String?
+  emailVerified  Boolean?
+  phone       String?
+  address     String?
+  rooms       Room[]
+  accounts    Account[]
+  sessions    Session[]
+  likes       Like[]
+  comments    Comment[]
+  bookings    Booking[]
+}
+
+model Comment {
+  id               Int        @id  @default(autoincrement())
+  createdAt        DateTime   @default(now())
+  body             String
+  roomId           Int
+  userId           String
+  room             Room       @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, roomId])
+}
+
+model Like {
+  id               Int         @id  @default(autoincrement())
+  createdAt        DateTime    @default(now())
+  userId           String
+  roomId           Int
+  room             Room         @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Room {
-  id                Int       @id @default(autoincrement())     // 숙소 아이디
-  title             String    // 제목
-  images            String[]  // 상세사진
-  address           String    // 주소
-  lat               String    // 위도
-  lng               String    // 경도
-  category          String    // 카테고리
-  desc              String    // 설명
-  price             Int       // 가격
-  bedroomDesc       String?   // 침실 설명
-  freeCancel        Boolean   @default(false)   // 무료취소
-  selfCheckIn       Boolean   @default(false)   // 셀프 체크인
-  officeSpace       Boolean   @default(false)   // 사무시설
-  hasMountainView   Boolean   @default(false)   // 마운틴 뷰
-  hasShampoo        Boolean   @default(false)   // 샴푸
-  hasFreeLaundry    Boolean   @default(false)   // 무료세탁
-  hasAirConditioner Boolean   @default(false)   // 에어컨
-  hasWifi           Boolean   @default(false)   // 와이파이
-  hasBarbeque       Boolean   @default(false)   // 바베큐 시설
-  hasFreeParking    Boolean   @default(false)   // 무료 주차
-  userId            String?    // 사용자 아이디
-  user              User?      @relation(fields: [userId], references: [id], onDelete: Cascade)  // 사용자 정보
+  id                Int         @id @default(autoincrement())
+  title             String
+  images            String[]
+  imageKeys         String[]
+  address           String
+  lat               String
+  lng               String
+  category          String
+  desc              String
+  price             Int
+  bedroomDesc       String?
+  freeCancel        Boolean     @default(false)
+  selfCheckIn       Boolean     @default(false)
+  officeSpace       Boolean     @default(false)
+  hasMountainView   Boolean     @default(false)
+  hasShampoo        Boolean     @default(false)
+  hasFreeLaundry    Boolean     @default(false)
+  hasAirConditioner Boolean     @default(false)
+  hasWifi           Boolean     @default(false)
+  hasBarbeque       Boolean     @default(false)
+  hasFreeParking    Boolean     @default(false)
+  userId            String?
+  createdAt         DateTime    @default(now())
+  likes             Like[]
+  comments          Comment[]
+  bookings          Booking[]
+  user              User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
 }
 
+model Faq {
+  id              Int         @id @default(autoincrement())
+  title           String
+  desc            String
+}
+
+model Booking {
+  id              String       @id @default(uuid())
+  checkIn         DateTime
+  checkOut        DateTime
+  guestCount      Int
+  totalDays       Int
+  totalAmount     Int    
+  roomId          Int
+  room            Room        @relation(fields: [roomId], references: [id])  
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])   
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
+  status          BookingStatus
+  payments        Payment[]
+}
+
+enum BookingStatus {
+  SUCCESS
+  CANCEL
+  PENDING
+  FAILED
+}
+
+model Payment {
+  id             String       @id @default(uuid())
+  bookingId      String           
+  booking        Booking      @relation(fields: [bookingId], references: [id])
+  paymentKey     String?                // 결제의 키 값
+  amount         Int                    // 결제 금액
+  type           PaymentType?           // 결제 타입 정보
+  orderId        String       @unique   // 주문한 결제를 식별하는 역할
+  orderName      String?                // 주문명
+  mId            String?                // 상점아이디(MID). 토스페이먼츠에서 발급
+  method         String?                // 결제수단
+  status         PaymentStatus          // 결제 처리 상태
+  requestedAt    String?                // 결제가 일어난 날짜와 시간 정보
+  approvedAt     String?                // 결제 승인이 일어난 날짜와 시간
+  cardNumber     String?                // 카드번호입니다. 번호의 일부는 마스킹
+  cardType       String?                // 카드 종류: 신용, 체크, 기프트, 미확인 
+  receiptUrl     String?                // 발행된 영수증 url 정보
+  checkoutUrl    String?                // 결제창 url 정보
+  failureCode    String?                // 오류 타입을 보여주는 에러 코드
+  failureMessage String?                // 에러 메시지
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @default(now())
+}
+
+enum PaymentType {
+  NORMAL
+  BILLING
+  BRANDPAY
+}
+
+enum PaymentStatus {
+  READY
+  IN_PROGRESS
+  WAITING_FOR_DEPOSIT
+  DONE
+  CANCELED
+  PARTIAL_CANCELED
+  ABORTED
+  EXPIRED
+}

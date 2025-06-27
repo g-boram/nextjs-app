@@ -1,14 +1,12 @@
 import cn from "classnames";
-
 import Calendar from "react-calendar";
-
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import FilterLayout from "./layout";
 import { useState } from "react";
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { detailFilterState, filterState } from "/atom";
-import FilterLayout from "./layout";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { detailFilterState, filterState } from "@/app/atom";
 
 export const SearchFilter = () => {
   return (
@@ -70,6 +68,7 @@ const CheckInFilter = () => {
   const [filterValue, setFilterValue] = useRecoilState(filterState);
   const [detailFilter, setDetailFilter] = useRecoilState(detailFilterState);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (e: any) => {
     setFilterValue({
       ...filterValue,
@@ -97,6 +96,7 @@ const CheckOutFilter = () => {
   const [filterValue, setFilterValue] = useRecoilState(filterState);
   const [detailFilter, setDetailFilter] = useRecoilState(detailFilterState);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (e: any) => {
     setFilterValue({
       ...filterValue,

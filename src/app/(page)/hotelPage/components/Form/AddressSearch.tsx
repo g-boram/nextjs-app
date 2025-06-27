@@ -1,41 +1,37 @@
-'use client'
+"use client";
 
-import { RoomFormType } from '@/interface'
-import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form'
-import DaumPostcodeEmbed from 'react-daum-postcode'
-import { useState } from 'react'
+import DaumPostcodeEmbed from "react-daum-postcode";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { useState } from "react";
+import { RoomFormType } from "../../interface";
 
 interface AddressProps {
-  setValue: UseFormSetValue<RoomFormType>
-  register: UseFormRegister<RoomFormType>
-  errors: FieldErrors<RoomFormType>
+  setValue: UseFormSetValue<RoomFormType>;
+  register: UseFormRegister<RoomFormType>;
+  errors: FieldErrors<RoomFormType>;
 }
 
-export default function AddressSearch({
-  register,
-  errors,
-  setValue,
-}: AddressProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+export default function AddressSearch({ register, errors, setValue }: AddressProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleComplete = (data: any) => {
-    let fullAddress = data.address
-    let extraAddress = ''
+    let fullAddress = data.address;
+    let extraAddress = "";
 
-    if (data.addressType === 'R') {
-      if (data.bname !== '') {
-        extraAddress += data.bname
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname;
       }
-      if (data.buildingName !== '') {
-        extraAddress +=
-          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName
+      if (data.buildingName !== "") {
+        extraAddress += extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
-      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
+      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setValue('address', fullAddress)
-    setIsOpen(false)
-  }
+    setValue("address", fullAddress);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -47,7 +43,7 @@ export default function AddressSearch({
           <input
             readOnly
             placeholder="주소를 입력해주세요"
-            {...register('address', { required: true })}
+            {...register("address", { required: true })}
             className="col-span-3 block w-full outline-none px-4 py-2 rounded-lg border-2 focus:border-black placeholder:text-gray-400"
           />
           <button
@@ -58,7 +54,7 @@ export default function AddressSearch({
             주소 검색
           </button>
         </div>
-        {errors.address && errors.address.type === 'required' && (
+        {errors.address && errors.address.type === "required" && (
           <span className="text-red-600 text-sm">필수 항목입니다.</span>
         )}
       </div>
@@ -68,5 +64,5 @@ export default function AddressSearch({
         </div>
       )}
     </>
-  )
+  );
 }

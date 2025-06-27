@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Header from "@/components/(Header)/Header";
 import { RecoilRoot } from "recoil";
+import Header from "./components/(Header)/Header";
 
 interface Props {
   children?: React.ReactNode;
