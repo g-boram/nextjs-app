@@ -8,10 +8,10 @@ export const detailFilterState = atom<DetailFilterType | null>({
 
 export const filterState = atom<FilterProps>({
   key: "filter",
-  default: {
-    location: "",
-    checkIn: "",
-    checkOut: "",
-    guest: 0,
-  },
+  // default: {
+  //   location: "",
+  //   checkIn: "",
+  //   checkOut: "",
+  //   guest: 0,
+  // },
 });

@@ -12,9 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <NextLayout>{children}</NextLayout>
-        </SessionProvider>
+        {/* <SessionProvider> */}
+        <NextLayout>{children}</NextLayout>
+        {/* </SessionProvider> */}
       </body>
     </html>
   );

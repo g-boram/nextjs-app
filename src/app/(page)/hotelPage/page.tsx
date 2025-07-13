@@ -1,3 +1,5 @@
+import "tailwindcss";
+
 import React from "react";
 import HotelNavbar from "./components/navbar/HotelNavbar";
 import Footer from "./components/Footer";
