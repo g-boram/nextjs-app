@@ -1,10 +1,8 @@
 "use client";
-
-import "./globals.css";
-import Navbar from "@/components/(Navbar)/Navbar";
+import "tailwindcss";
+import "../../globals.css";
 import { SessionProvider } from "next-auth/react";
-import { NextLayout } from "./nextLayout";
-import Footer from "@/components/(Layout)/(Footer)/Footer";
+import { NextLayout } from "./providers";
 
 export default function RootLayout({
   children,
@@ -14,11 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <Navbar />
-          <NextLayout>{children}</NextLayout>
-          <Footer />
-        </SessionProvider>
+        {/* <SessionProvider> */}
+        <NextLayout>{children}</NextLayout>
+        {/* </SessionProvider> */}
       </body>
     </html>
   );
